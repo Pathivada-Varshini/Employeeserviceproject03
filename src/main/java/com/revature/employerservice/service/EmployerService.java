@@ -2,6 +2,7 @@ package com.revature.employerservice.service;
 
 import com.revature.employerservice.exceptions.EmployerNotFoundException;
 import com.revature.employerservice.model.Employer;
+import com.revature.employerservice.repository.CompanyRepository;
 import com.revature.employerservice.repository.EmployerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,11 @@ public class EmployerService {
     @Autowired
     private EmployerRepository employerRepository;
 
+    @Autowired
+    private CompanyRepository companyRepository;
+
     public Employer addEmployer(Employer employer) {
+        companyRepository.save(employer.getCompany());
         return employerRepository.save(employer);
     }
 
@@ -54,5 +59,16 @@ public class EmployerService {
 
     public List<Employer> fetchAllEmployers() {
         return employerRepository.findAll();
+    }
+
+    public Employer login(String email, String password) {
+        Employer employer = employerRepository.findByEmail(email)
+                .orElseThrow(() -> new EmployerNotFoundException("Employer not found with email: " + email));
+
+        if (!employer.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Invalid password");
+        }
+
+        return employer;
     }
 }

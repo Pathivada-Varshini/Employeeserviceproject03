@@ -52,4 +52,9 @@ public class CompanyService {
     public List<Company> fetchAllCompanies() {
         return companyRepository.findAll();
     }
+
+    public Company fetchCompanyByName(String name) {
+        return companyRepository.findByName(name)
+                .orElseThrow(() -> new CompanyNotFoundException("Company not found with name: " + name));
+    }
 }

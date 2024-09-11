@@ -43,4 +43,10 @@ public class EmployerController {
     public ResponseEntity<List<Employer>> fetchAllEmployers() {
         return ResponseEntity.ok(employerService.fetchAllEmployers());
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<Employer> login(@RequestParam String email, @RequestParam String password) {
+        Employer employer = employerService.login(email, password);
+        return ResponseEntity.ok(employer);
+    }
 }

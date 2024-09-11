@@ -43,4 +43,9 @@ public class CompanyController {
     public ResponseEntity<List<Company>> fetchAllCompanies() {
         return ResponseEntity.ok(companyService.fetchAllCompanies());
     }
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Company> fetchCompanyByName(@PathVariable String name) {
+        Company company = companyService.fetchCompanyByName(name);
+        return ResponseEntity.ok(company);
+    }
 }
