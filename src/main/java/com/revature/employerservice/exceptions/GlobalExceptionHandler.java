@@ -1,4 +1,4 @@
-package com.example.revhireemployer.exceptions;
+package com.revature.employerservice.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

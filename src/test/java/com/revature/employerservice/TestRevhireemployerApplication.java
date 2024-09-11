@@ -1,4 +1,4 @@
-package com.example.revhireemployer;
+package com.revature.employerservice;
 
 import org.springframework.boot.SpringApplication;
 

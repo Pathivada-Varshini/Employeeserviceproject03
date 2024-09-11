@@ -1,4 +1,4 @@
-package com.example.revhireemployer.config;
+package com.revature.employerservice.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
