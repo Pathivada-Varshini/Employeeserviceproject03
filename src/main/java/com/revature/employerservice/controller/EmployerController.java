@@ -3,23 +3,22 @@ package com.revature.employerservice.controller;
 import com.revature.employerservice.model.Employer;
 import com.revature.employerservice.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/employers")
+@RequestMapping("/api/employers")
 public class EmployerController {
 
     @Autowired
     private EmployerService employerService;
 
-    @PostMapping("/add")
-    public ResponseEntity<Employer> addEmployer(@RequestBody Employer employer) {
+    @PostMapping("/register")
+    public ResponseEntity<Employer> registerEmployer(@RequestBody Employer employer) {
         Employer savedEmployer = employerService.addEmployer(employer);
-        return new ResponseEntity<>(savedEmployer, HttpStatus.CREATED);
+        return ResponseEntity.ok(savedEmployer);
     }
 
     @PutMapping("/update/{id}")
@@ -35,13 +34,15 @@ public class EmployerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employer> fetchEmployerById(@PathVariable Long id) {
-        return ResponseEntity.ok(employerService.fetchEmployerById(id));
+    public ResponseEntity<Employer> getEmployerById(@PathVariable Long id) {
+        Employer employer = employerService.fetchEmployerById(id);
+        return ResponseEntity.ok(employer);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Employer>> fetchAllEmployers() {
-        return ResponseEntity.ok(employerService.fetchAllEmployers());
+    public ResponseEntity<List<Employer>> getAllEmployers() {
+        List<Employer> employers = employerService.fetchAllEmployers();
+        return ResponseEntity.ok(employers);
     }
 
     @PostMapping("/login")

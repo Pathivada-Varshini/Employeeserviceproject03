@@ -20,6 +20,9 @@ public class Employer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
@@ -32,15 +35,11 @@ public class Employer {
     @Column(name = "contact_number")
     private String contactNumber;
 
-    @Column(name = "employee_address")
-    private String employeeAddress;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
