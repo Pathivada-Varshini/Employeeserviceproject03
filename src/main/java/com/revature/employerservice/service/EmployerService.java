@@ -1,6 +1,7 @@
 package com.revature.employerservice.service;
 
 import com.revature.employerservice.exceptions.EmployerNotFoundException;
+import com.revature.employerservice.model.Company;
 import com.revature.employerservice.model.Employer;
 import com.revature.employerservice.repository.CompanyRepository;
 import com.revature.employerservice.repository.EmployerRepository;
@@ -19,9 +20,24 @@ public class EmployerService {
     private CompanyRepository companyRepository;
 
     public Employer addEmployer(Employer employer) {
-        companyRepository.save(employer.getCompany());
+        // Get company details from the employer object
+        Company company = employer.getCompany();
+        if (company != null) {
+            // Check if the company already exists by unique field (like email or name)
+            Company existingCompany = companyRepository.findByEmailAddress(company.getEmailAddress());
+            if (existingCompany != null) {
+                // If the company already exists, use the existing one
+                employer.setCompany(existingCompany);
+            } else {
+                // Save the new company if it doesn't exist
+                Company savedCompany = companyRepository.save(company);
+                employer.setCompany(savedCompany);
+            }
+        }
+
         return employerRepository.save(employer);
     }
+
 
     public Employer updateEmployer(Long id, Employer employerDetails) {
         Employer existingEmployer = employerRepository.findById(id)
